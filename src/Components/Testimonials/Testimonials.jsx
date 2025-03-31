@@ -3,8 +3,10 @@ import './Testimonials.css'
 import { testimonialsData } from '../../data/testimonialsData'
 import leftArrow from '../../assets/leftArrow.png'
 import rightArrow from '../../assets/rightArrow.png'
-function Testimonials() {
+import {motion} from 'framer-motion'
 
+function Testimonials() {
+    const transition = {type:'tween',duration:'1'}
     const [selected,setSelected] = useState(0);
     const tLength = testimonialsData.length;
 
@@ -14,9 +16,14 @@ function Testimonials() {
             <span>Testimonials</span>
             <span className='stroke-text'>what they</span>
             <span>say about us</span>
-            <span>
+            <motion.span
+               key={selected} 
+               initial={{opacity:0,x:-100}}
+               whileInView={{opacity:1,x:0}}
+               exit={{opacity:0,x:100}}
+               transition={transition}>
                 {testimonialsData[selected].review}
-            </span>
+            </motion.span>
             <span>
                 <span>
                     {testimonialsData[selected].name}
@@ -25,9 +32,23 @@ function Testimonials() {
             </span>
         </div>
         <div className="testimonials-r">
-            <div></div>
-            <div></div>
-            <img src={testimonialsData[selected].image} alt="" />
+            <motion.div
+               initial={{opacity:0,x:-100}}
+               whileInView={{opacity:1,x:0}}
+               transition={transition} >
+            </motion.div>
+            <motion.div
+                initial={{opacity:0,x:100}}
+                whileInView={{opacity:1,x:0}}
+                transition={transition}>
+            </motion.div>
+            <motion.img
+                key={selected} 
+                initial={{opacity:0,x:100}}
+                whileInView={{opacity:1,x:0}}
+                exit={{opacity:0,x:-100}}
+                transition={transition}
+                src={testimonialsData[selected].image} alt="" />
             <div className="arrows">
                 <img 
                 onClick={()=>{
